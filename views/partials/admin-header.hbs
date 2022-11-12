@@ -1,0 +1,44 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Admin Panel</a>
+
+    </div>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="/admin">All products <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="admin/placed-orders">All orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">All users</a>
+        </li>
+      </ul>
+      {{!-- <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form> --}}
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        {{#if administrator}}
+        {{administrator.name}}
+        {{else}}
+        Acccount
+        {{/if}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {{#if administrator}}
+        <a class="dropdown-item" href="/admin/admin-logout">Logout</a>
+        {{else}}
+        <a class="dropdown-item" href="/admin/admin-login">Login</a>
+        {{/if}}
+
+
+
+      </div>
+    </div>
+  </nav>
+</header>

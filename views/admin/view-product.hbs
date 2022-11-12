@@ -1,0 +1,42 @@
+<section>
+  <div class="container">
+    <div class="row mt-4 mb-4">
+      <a href="/admin/add-product" class="btn btn-warning ml-auto">add product</a>
+    </div>
+    <table class="table mt-5" id="protable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Image</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {{#each products}}
+        <tr>
+          <th scope="row">{{this.name}}</th>
+          <td>{{this.category}}</td>
+          <td>₹{{this.price}}</td>
+          <td>{{this.description}}</td>
+          <td> <img style="height:50px ;width:50px" src="/product-images/{{this._id}}.jpg" alt=""> </td>
+          <td> <a href="/admin/edit-product/{{this._id}}" class="btn btn-primary">Edit</a>
+            <a href="/admin/delete-product/{{this._id}}" class="btn btn-danger"
+              onclick="return confirm('are you want delete {{this.name}}?')">delete</a>
+          </td>
+        </tr>
+        {{/each}}
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+  $(document).ready(function () {
+    $('#protable').DataTable();
+  });
+</script>

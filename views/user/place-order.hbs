@@ -1,0 +1,132 @@
+<section>
+    <div class="container mt-5">
+        <form action="" id="checkout-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Enter Delivery Details</h2>
+
+                    <label for="">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" value="valiyakath house">
+
+                    <label for="">Pincode</label>
+                    <input type="text" class="form-control" id="pincode" name="pincode" value="680702">
+
+                    <label for="">Mobile</label>
+                    <input type="text" class="form-control" id="mobile" name="mobile" value="9745007140">
+                    <input type="text" name="userid" id="" value="{{user._id}}" hidden>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="container mt-5 ml-5 checkout">
+                        <h5>Total Amount: {{total}}</h5>
+                        <hr>
+                        <div class="payment">
+                            <p>Payment Method</p>
+                            <label for="COD" class="radio-inline">
+                                <input type="radio" name="paymentMethod" value="COD" id="COD">COD
+                            </label>
+                            <label for="onlinePayment" class="radio-inline mt-2">
+                                <input type="radio" name="paymentMethod" value="ONLINE" id="onlinePayment">Online
+                                Payment
+                            </label>
+                            <button class="btn btn-primary float-right" type="submit">Checkout</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+
+<script>
+    $("#checkout-form").submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: 'place-order',
+            method: 'post',
+            data: $('#checkout-form').serialize(),
+            success: (response) => {
+                if (response.codSuccess) { 
+
+                    location.href = '/order-success'
+                } else {
+                    razorpayPayment(response)
+                }
+            }
+
+        })
+    })
+    function razorpayPayment(order) {
+        var options = { 
+            "key": "rzp_test_VGAyleWqJrNrBH", // Enter the Key ID generated from the Dashboard
+            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Muza Industries",
+            "description": "Test Transaction",
+            "image": "https://static.vecteezy.com/system/resources/thumbnails/007/905/822/small/industry-4-0-concept-business-control-or-logo-world-factory-and-wheel-eclectic-cyber-physical-systems-concept-smart-factory-logo-free-vector.jpg",
+            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                verifyPayment(response, order)
+            },
+            "prefill": {
+                "name": "Gaurav Kumar",
+                "email": "gaurav.kumar@example.com",
+                "contact": "9999999999"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+    function verifyPayment(payment, order) {
+        
+        $.ajax({
+            url: '/verify-payment',
+            data: {
+                payment,
+                order
+            },
+            method: 'post',
+            success:(response)=>{
+                if(response.status){
+                    location.href = '/order-success'
+                }else{
+                    alert('payment failed')
+                }
+            }
+        })
+
+    }
+</script>
+
+
+<style>
+    input[type=radio] {
+        width: 20px;
+        height: 20px;
+    }
+
+    label.radio-inline {
+        display: flex;
+        align-items: center;
+    }
+
+    .checkout {
+        border: 1px solid;
+        border-radius: 3px;
+        padding: 30px;
+    }
+
+    .payment {
+        padding-bottom: 16px;
+    }
+</style>

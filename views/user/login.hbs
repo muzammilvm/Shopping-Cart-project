@@ -1,0 +1,32 @@
+<section>
+    <div class="container">
+        <div class="row justify-content-center mt-3">
+
+            <div class="mt-3">
+                <div class="d-flex justify-content-center">
+                    <h2>Login</h2>
+
+                </div>
+                <div class="text-danger">
+                    {{#if loginerr}}
+                    <h6>Invalid Email or Password</h6>
+                    {{/if}}
+                </div>
+                <form action="/login" method="post" class="mt-3">
+                    <div class="form-outline mb-4">
+                        <input type="email" id="form2Example1" class="form-control" name="email" placeholder="Email Address" style="border-width: 2px;" value="muzammilvm@gmail.com">
+                    </div>
+                    <div class="form-outline mb-4">
+                        <input type="password" id="form2Example2" class="form-control" name="password" placeholder="password" style="border-width: 2px;" value="123">
+                    </div>
+                    <div class="mt-3">
+                        <a href="/signup" style="margin: top 1cm ;">Create new Account</a>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 4.6cm ;">login</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</section>
