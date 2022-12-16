@@ -27,9 +27,9 @@ router.get('/', async function (req, res, next) {
   })
 
 })
-router.get('/login', (req, res) => {
+router.get('/login', (req, res) => {  
   if (req.session.userloggedin) { 
-    res.redirect('/')
+    res.render('user/login')
   } else {
     res.render('user/login', { 'loginerr': req.session.userloginerr })
     req.session.userloginerr = false
@@ -74,6 +74,8 @@ router.get('/cart', verifylogin, async (req, res) => {
     let user = req.session.user
     let products = await userhelper.getcartproducts(req.session.user._id)
     let total=0
+    console.log(products.length);
+
     if(products.length>0){
   
       total = await userhelper.gettotalamount(req.session.user._id)
@@ -84,7 +86,7 @@ router.get('/cart', verifylogin, async (req, res) => {
   }else{
     res.redirect('/login')
   }
-
+ 
 
 
 })
@@ -101,25 +103,26 @@ router.get('/add-to-cart/:id', (req, res) => {
   userhelper.addtocart(req.params.id, req.session.user._id).then(() => {
 
     res.json({ status: true })
-
+ 
 
 
 
   })
 })
 
-router.post('/change-product-quantity', (req, res, next) => {
+router.post('/change-product-quantity',async (req, res, next) => {
   console.log(req.body);
   userhelper.changeproductquantity(req.body).then(async (response) => {
+    let products = await userhelper.getcartproducts(req.session.user._id)
+    console.log(products.length);
     if(products.length>0){
-  
-    response.total = await userhelper.gettotalamount(req.body.user)
+    response.total = await userhelper.gettotalamount(req.body.user) 
     }
     console.log(response.total);
     res.json(response)
   })
 })
-
+ 
 router.post('/remove-cart-item', (req, res) => {
   console.log(req.body);
   userhelper.removeproductfromcart(req.body).then((response) => {

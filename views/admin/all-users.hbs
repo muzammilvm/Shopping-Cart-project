@@ -1,0 +1,19 @@
+<section>
+  <div class="container">
+    <table class="table mt-5">
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <th>E-mail</th>
+        </tr>
+        <tr>
+          {{#each users}}
+          <td>{{this.name}}</td>
+          <td>{{this.email}}</td>
+          
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

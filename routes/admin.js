@@ -1,5 +1,7 @@
 const { response } = require('express');
 var express = require('express');
+const req = require('express/lib/request');
+const res = require('express/lib/response');
 const ObjectId = require('mongodb').ObjectId
 const productHelpers = require('../helpers/product-helpers');
 var router = express.Router();
@@ -79,10 +81,11 @@ router.post('/edit-product/:id', (req, res) => {
     }
   })
 })
-router.get('/placed-orders', (req, res) => {
+router.get('/placed-orders',verifylogin, (req, res) => {
+  let administrator=req.session.admin
   let orders = producthelper.getuserorders().then((orders) => {
     console.log('orders: ' + orders);
-    res.render("admin/placed-orders", { admin: true, orders});
+    res.render("admin/placed-orders", { admin: true, orders,administrator});
   })
 
 
@@ -141,6 +144,15 @@ router.post('/admin-login', (req, res) => {
 router.get('/admin-logout', (req, res) => {
   req.session.admin = null
   res.redirect('/admin')
+})
+
+router.get('/all-users',verifylogin,(req,res)=>{
+  let administrator=req.session.admin
+  productHelpers.getallusers().then((users)=>{
+    console.log(users);
+    res.render('admin/all-users',{admin: true,administrator,users})
+  })
+ 
 })
 
 
