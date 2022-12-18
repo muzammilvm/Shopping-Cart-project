@@ -1,20 +1,22 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+    {{!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
       aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="/">Shopping-kart</a>
+    </button> --}}
+    <a class="navbar-brand mr-5" href="/">Shopping-kart</a>
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item active">
+        <li class="nav-item active mr-2">
           <a class="nav-link" href="">products <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/cart">cart<span class="badge badge-success"
-              id="cart-count">{{cartcount}}</span></a>
+        {{#if user}}
+        <li class="nav-ite mr-2">
+          <a class="nav-link" href="/cart"><i class="fa-solid fa-cart-shopping"></i>cart<span class="badge badge-success"
+             style="margin-left: 3px;" id="cart-count">{{cartcount}}</span></a>
         </li>
+        {{/if}}
         {{#if user}}
         <li class="nav-item">
           <a class="nav-link" href="/orders">orders</a>
@@ -27,10 +29,8 @@
           {{#if user}}
           {{user.name}}
           {{else}}
-          Account
-
+         <i class="fa-regular fa-user"></i> Account
           {{/if}}
-
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {{#if user}}

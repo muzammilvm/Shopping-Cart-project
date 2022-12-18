@@ -20,7 +20,6 @@ router.get('/', async function (req, res, next) {
   console.log(user);
   let cartcount = null
   if (user) { cartcount = await userhelper.getcartcount(req.session.user._id) }
-
   productHelpers.getallproducts().then((products) => {
 
     res.render('user/view-products', { products, user, cartcount })
@@ -75,14 +74,12 @@ router.get('/cart', verifylogin, async (req, res) => {
     let products = await userhelper.getcartproducts(req.session.user._id)
     let total=0
     console.log(products.length);
-
     if(products.length>0){
-  
-      total = await userhelper.gettotalamount(req.session.user._id)
+    
     }
     console.log(products);
     console.log('id:' + req.session.user._id);
-    res.render('user/cart', { user, products, total })
+    res.render('user/cart', { user, products, total})
   }else{
     res.redirect('/login')
   }
