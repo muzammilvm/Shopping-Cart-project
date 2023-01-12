@@ -89,16 +89,17 @@ router.get('/placed-orders',verifylogin, (req, res) => {
   })
 
 
-})
+})  
 
-router.get('/Ship-order/:id', (req, res) => {
+router.get('/Ship-order/:id', (req, res) => { 
   console.log("hello");
+  let shipped=false
 
   id = req.params.id
   console.log(id);
 
   productHelpers.changeStatus(id).then(() => {
-    res.redirect('/admin/placed-orders');
+    res.redirect('/admin/placed-orders'); 
   })
 })
 
